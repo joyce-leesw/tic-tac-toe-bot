@@ -19,7 +19,7 @@ class Q:
         self.values[state] = value
 
     def get_best_move(self, state, board):
-        q_values = self.values[state]
+        q_values = self.values.get(state, [[0,0,0] for _ in range(3)])
         empty_cells = np.array([[i, j] for i in range(len(board)) for j in range(len(board[i])) if board[i][j] == 0])
         empty_q_values = [q_values[cell[0]][cell[1]] for cell in empty_cells]
         max_q_value = max(empty_q_values)

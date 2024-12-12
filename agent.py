@@ -44,8 +44,6 @@ class Agent:
                     else:
                         self.qlearner.update(state, action, game.cur_state(), 0)
                         counter_draw += 1
-                else:
-                    self.qlearner.update(state, action, game.next_state(action[0], action[1]), 0)
 
             self.exploration_rate *= 0.99
 
