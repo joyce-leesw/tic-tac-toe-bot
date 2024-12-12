@@ -78,13 +78,18 @@ class Tictactoe:
         print("-----------------\n")
 
     # ensure no illegal moves, player changes after every move
-    def play(self, x, y):
+    def play(self, x, y, player=None):
         if self.board[x][y] != 0:
             return None
-        self.board[x][y] = self.player
+
+        current_player = player if player is not None else self.player
+        self.board[x][y] = current_player
+
         if self.render:
             self.show_board()
         if self.is_winner():
             return self.is_winner()
-        self.player *= -1
+
+        if player is None:
+            self.player *= -1
         return None

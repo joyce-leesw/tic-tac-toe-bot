@@ -20,13 +20,19 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-3. **Execute the Script**
+3. **Install all the required packages**
+
+```bash
+pip install -r requirements.txt
+```
+
+4. **Execute the Script**
 
 ```bash
 python3 main.py
 ```
 
-4. **Run FastAPI using Uvicorn
+5. **Run FastAPI using Uvicorn**
 
 ```bash
 uvicorn main:app --reload --host 0.0.0.0 --port 8000

@@ -53,7 +53,7 @@ async def reset_game():
 @app.post("/play", response_model=MoveResponse)
 async def play_game(move: MoveRequest):
     print(move.row, move.column)
-    player_winner = game.play(move.row, move.column)
+    player_winner = game.play(move.row, move.column, 1)
     if player_winner:
         return MoveResponse(
             ai_move=None,
@@ -73,7 +73,7 @@ async def play_game(move: MoveRequest):
     if ai_action is None:
         raise HTTPException(status_code=500, detail="AI could not determine a valid move.")
     
-    ai_winner = game.play(ai_action[0], ai_action[1])
+    ai_winner = game.play(ai_action[0], ai_action[1], -1)
     if ai_winner:
         return MoveResponse(
             ai_move=ai_action,
