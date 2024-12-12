@@ -1,13 +1,13 @@
+import random
 class Tictactoe:
     def __init__ (self, render= True):
         self.board = [[0,0,0] for _ in range(3)]
         self.render = render
-        self.player = 1
+        self.player = random.choice([1, -1])
         self.repr = {0: ".", 1: "X", -1: "O"}
 
     # get player key
     def get_player(self):
-        player = ''
         key = ''
 
         key = input("Please select your key. X or O?: ")
@@ -17,19 +17,6 @@ class Tictactoe:
             self.player *= -1
         print(f"Your key is {key}")
         return key
-    
-    # # get order of player
-    # def get_order(self):
-    #     player = ''
-    #     flag = 1
-    #     while flag == 1:
-    #         player = input("Would you like to go first? Y/N?: ")
-    #         player = player.upper()
-    #         if player == 'Y' or player =='N':
-    #             flag = 0
-    #         else:
-    #             print("Invalid Key")
-    #     return player
 
     # check if there exists a winner
     def is_winner(self):
@@ -56,6 +43,11 @@ class Tictactoe:
     # return state of board
     def cur_state(self):
         return str(self.board)
+    
+    def next_state(self, x, y):
+        next_state = self.board.copy()
+        next_state[x][y] = self.player
+        return str(next_state)
 
     # check for valid moves
     def get_valid_moves(self):
@@ -68,6 +60,9 @@ class Tictactoe:
 
     # check if game has ended
     def get_end(self):
+        if self.is_winner() is not None:
+            return True
+        
         for row in range(3):
             for column in range(3):
                 if self.board[row][column] == 0:

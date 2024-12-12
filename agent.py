@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 from q import Q
 from tictactoe import Tictactoe
@@ -7,41 +8,51 @@ class Agent:
     def __init__(self):
         # probability of choosing a random function, decreases over time
         # epsilon greddy algorithm
-        self.epsilon = 1.0
+        self.exploration_rate = 0.5
         self.qlearner = Q()
 
-    def get_moves(self, state, valid_moves):
-        best = self.qlearner.get_best_move(state)
+    def get_moves(self, state, board):
         # choose a random move to begin
         # If this number is smaller than a predetermined epsilon value the algorithm will play a random move 
         # however if the generated number was larger than epsilon the algorithm will take the q-learning approach
-        if best is None or random.random() < self.epsilon:
-            best = random.choice(valid_moves)
+        if random.uniform(0, 1) < self.exploration_rate or state not in self.qlearner.values:
+            empty_cells = np.array([[i, j] for i in range(len(board)) for j in range(len(board[i])) if board[i][j] == 0])
+            best = random.choice(empty_cells)
+        else:
+            best = self.qlearner.get_best_move(state, board)
         return best 
 
-    def learn(self, n=50000):
+    def learn(self, num_episodes=50000):
         counter_win = 0
-        counter_lose = 0
-        for _ in range(n):
+        counter_draw = 0
+        counter_loss = 0
+        for _ in range(num_episodes):
             game = Tictactoe(render=False)
-            while True:
+            while not game.get_end():
                 state = game.cur_state()
-                action = self.get_moves(state, game.get_valid_moves())
-                winner = game.play(*action)
-                # perform chosen action, transition to next state
-                # receive rewards for action and update q table
-                if winner or game.get_end():
-                    self.qlearner.update(state, action, game.cur_state(), 100)
-                    counter_win += 1
-                    break
 
-                winner = game.play(*random.choice(game.get_valid_moves()))
-                if winner or game.get_end():
-                    self.qlearner.update(state, action, game.cur_state(), -100)
-                    counter_lose += 1
-                    break
-                self.qlearner.update(state, action, game.cur_state(), 0)
-            self.epsilon -= 0.0001
-        print("Win rate:", counter_win)
-        print("Lose rate:", counter_lose)
+                action = self.get_moves(state, game.board)
+                winner = game.play(action[0], action[1])
+
+                if game.get_end():
+                    if winner == 1:
+                        self.qlearner.update(state, action, game.cur_state(), -1)
+                        counter_loss += 1
+                    elif winner == -1:
+                        self.qlearner.update(state, action, game.cur_state(), 1)
+                        counter_win += 1
+                    else:
+                        self.qlearner.update(state, action, game.cur_state(), 0)
+                        counter_draw += 1
+                else:
+                    self.qlearner.update(state, action, game.next_state(action[0], action[1]), 0)
+
+            self.exploration_rate *= 0.99
+
+        agent_win_percentage = (counter_win / num_episodes) * 100
+        print("Win rate: {:.2f}%".format(agent_win_percentage), counter_win)
+        print(counter_draw)
+        print(counter_loss)
+        print(num_episodes)
     
+        

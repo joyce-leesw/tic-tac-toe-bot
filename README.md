@@ -6,3 +6,28 @@ Q Learning works by encouraging the machine to explore its environment to choose
 
 In the beginning, the machine will select a random action and play horribly. However, through iterations, it updates itself and learns to optimise the rewards of its action, ultimately reaching a high winning probability using **epsilon greedy algorithms**. 
 
+## 💻 Run Locally
+
+1. **Create a Virtual Environment**
+
+```bash
+python3 -m venv venv
+```
+
+2. **Activate the Virtual Environment**
+
+```bash
+source venv/bin/activate
+```
+
+3. **Execute the Script**
+
+```bash
+python3 main.py
+```
+
+4. **Run FastAPI using Uvicorn
+
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
