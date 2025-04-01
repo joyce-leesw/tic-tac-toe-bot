@@ -1,5 +1,3 @@
-# Tic-Tac-Toe-Frontend
-
 ## 💻 Run Locally
 
 1. **Install dependencies**
