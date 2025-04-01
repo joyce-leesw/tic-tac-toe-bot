@@ -1,0 +1,90 @@
+.player {
+  padding: 0.5rem;
+}
+
+.player-name {
+  display: inline-block;
+  width: 10rem;
+  font-size: 1rem;
+  color: var(--white);
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-overflow: ellipsis;
+  text-align: center;
+  font-family: 'MontserratBold';
+}
+
+.player input {
+  font: inherit;
+  font-size: 1rem;
+  width: 10rem;
+  border: none;
+  padding: 0.5rem;
+  animation: pulse-text 2s infinite;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.player-symbol {
+  margin-left: 1rem;
+  font-size: 1rem;
+  color: var(--white);
+}
+
+#players .save-button {
+  color: var(--yellow);
+}
+
+#players .save-button:hover {
+  color: var(--pink);
+}
+
+#players.highlight-player li.active .player-name,
+#players.highlight-player li.active .player-symbol {
+  color: var(--yellow);
+}
+
+@keyframes pulse-text {
+  0% {
+    color: var(--lightest-yellow);
+  }
+  50% {
+    color: var(--light-yellow);
+  }
+  100% {
+    color: var(--lightest-yellow);
+  }
+}
+
+@keyframes pulse-text-size {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+	.player-name, .player input {
+    width: 80%;
+    font-size: 0.9rem;
+    display: inline;
+    text-align: left;
+  }
+
+  #players .save-button {
+    color: var(--yellow);
+  }
+
+  #players .save-button:hover {
+    color: var(--yellow);
+  }
+}
+

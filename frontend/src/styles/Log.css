@@ -1,0 +1,38 @@
+#log {
+  max-width: 20rem;
+  color: var(--white);
+  list-style: none;
+  margin: 2rem auto;
+  padding: 0;
+  text-align: center;
+  font-family: 'MontserratLight';
+}
+
+#log li {
+  border-radius: 4px;
+  animation: slide-in-from-left 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+  margin: 0.75rem;
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes slide-in-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+	#log {
+    max-width: 80%;
+  }
+}
